@@ -1,5 +1,5 @@
-import TodoListItem from './TodoListItem';
-import './TodoList.css'
+import TodoListItem from '../TodoListItem/TodoListItem';
+import './TodoList.css';
 
 export default function TodoList({todos}) {
   const elements = todos.map((item) => {
@@ -7,10 +7,10 @@ export default function TodoList({todos}) {
 
     return(
       <li key={id} className="list-group-item">
-        <TodoListItem label={label} important={important}/>
+        <TodoListItem label={label}/>
       </li>
     );
   });
 
   return <ul className="list-group todo-list">{elements}</ul>;
-};
+}
