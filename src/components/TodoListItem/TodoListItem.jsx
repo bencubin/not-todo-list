@@ -1,43 +1,29 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import './TodoListItem.css';
 
-export default function TodoListItem({label}) {
-  const [done, setDone] = useState(false);
-  const [important, setImportant] = useState();
+export default function TodoListItem({label, important, done, onDeleted, onToggleImportant, onToggleDone}) {
   let classNames = 'todo-list-item';
-
-  function onLabelClick() {
-    setDone(() => {
-      return !done;
-    });
-  }
-
-  function onMarkImportant() {
-    setImportant(() => {
-      return !important;
-    });
-  }
 
   if (done) {
     classNames += ' done';
   }
-
+  
   if (important) {
     classNames += ' important';
   }
 
   return (
-    <span className={classNames}>
-      <span className="todo-list-item-label" onClick={onLabelClick}>
+    <span className={classNames} >
+      <span className="todo-list-item-label" onClick={onToggleDone}>
         {label}
       </span>
 
       <div>
-        <button type="button" className="btn btn-outline-success btn-sm" onClick={onMarkImportant}>
+        <button type="button" className="btn btn-outline-success btn-sm" onClick={onToggleImportant}>
           <i className="bi bi-exclamation"></i>
         </button>
 
-        <button type="button" className="btn btn-outline-danger btn-sm">
+        <button type="button" className="btn btn-outline-danger btn-sm" onClick={onDeleted}>
           <i className="bi bi-trash"></i>
         </button>
       </div>

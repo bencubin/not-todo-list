@@ -1,13 +1,20 @@
 import TodoListItem from '../TodoListItem/TodoListItem';
 import './TodoList.css';
 
-export default function TodoList({todos}) {
+export default function TodoList({todos, onDeleted, onToggleImportant, onToggleDone}) {
   const elements = todos.map((item) => {
-    const {label, important, id} = item;
+    const {label, important, done, id} = item;
 
-    return(
+    return (
       <li key={id} className="list-group-item">
-        <TodoListItem label={label}/>
+        <TodoListItem 
+          label={label} 
+          important={important}
+          done={done}
+          onDeleted={() => onDeleted(id)} 
+          onToggleImportant={() => onToggleImportant(id)} 
+          onToggleDone={() => onToggleDone(id)} 
+        />
       </li>
     );
   });
