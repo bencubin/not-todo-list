@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import './TodoListItem.css';
 
 export default function TodoListItem({label, important, done, onDeleted, onToggleImportant, onToggleDone}) {

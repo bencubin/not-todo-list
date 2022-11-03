@@ -7,6 +7,17 @@ import ItemAddForm from '../itemAddForm/ItemAddForm';
 import './App.css';
 
 export default function App() { 
+  const [todoData, setTodoData] = useState([
+    createTodoItem('Dont eat'),
+    createTodoItem('Dont sleep'),
+    createTodoItem('Look good'),
+    createTodoItem('Dont speak')
+  ]);
+
+  const [term, setTerm] = useState('');
+
+  const [filter, setFilter] = useState('all');
+
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -21,13 +32,6 @@ export default function App() {
       id: getRandomInt(0, 1000000)
     }
   }
-
-  const [todoData, setTodoData] = useState([
-    createTodoItem('Dont eat'),
-    createTodoItem('Dont sleep'),
-    createTodoItem('Look good'),
-    createTodoItem('Dont speak')
-  ]);
 
   function deleteItem(id) {
     setTodoData(() => {
@@ -78,6 +82,38 @@ export default function App() {
     });
   }
 
+  function onSearchChange(term) {
+    setTerm(term);
+  }
+
+  function onFilterChange(filter) {
+    setFilter(filter);
+  }
+
+  function search(items, term) {
+    if (term.length === 0) {
+      return items;
+    }   
+
+    return items.filter((item) => {
+      return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+    });
+  }
+
+  function filtering(items, filter) {
+    switch(filter) {
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item) => !item.done);
+      case 'done':  
+         return items.filter((item) => item.done);
+      default:
+        return items;
+    }
+  }
+
+  const visibleItems = filtering(search(todoData, term), filter);
   const doneCount = todoData.filter((el) => el.done).length;
   const todoCount = todoData.length - doneCount;
 
@@ -85,11 +121,11 @@ export default function App() {
     <div className="todo-app">
       <AppHeader todo={todoCount} done={doneCount} />
       <div className="top-panel d-flex">
-        <SearchPanel />
-        <ItemStatusFilter />
+        <SearchPanel onSearchChange={onSearchChange} />
+        <ItemStatusFilter filter={filter} onFilterChange={onFilterChange}/>
       </div>
       <TodoList
-        todos={todoData}
+        todos={visibleItems}
         onDeleted={deleteItem}
         onToggleImportant={onToggleImportant}
         onToggleDone={onToggleDone}
