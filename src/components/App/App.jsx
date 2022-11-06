@@ -3,7 +3,7 @@ import AppHeader from '../AppHeader/AppHeader';
 import SearchPanel from '../SearchPanel/SearchPanel';
 import TodoList from '../TodoList/TodoList';
 import ItemStatusFilter from '../ItemStatusFilter/ItemStatusFilter';
-import ItemAddForm from '../itemAddForm/ItemAddForm';
+import ItemAddForm from '../ItemAddForm/ItemAddForm';
 import './App.css';
 
 export default function App() { 
